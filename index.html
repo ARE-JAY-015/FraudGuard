@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FraudGuard | Transaction Telemetry & Risk Engine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f0e;
+      --panel: #121816;
+      --border: #28332d;
+      --gold: #d5b66a;
+      --red: #fa6670;
+      --green: #10b981;
+      --text: #f1f4f2;
+      --muted: #929d96;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'DM Sans', sans-serif; }
+    body { background: var(--bg); color: var(--text); padding: 40px 5%; max-width: 1200px; margin: 0 auto; }
+    h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+    
+    header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 30px; }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .icon { width: 44px; height: 44px; background: var(--gold); color: #000; display: grid; place-items: center; font-weight: 700; border-radius: 10px; font-size: 20px; }
+    .badge { font-size: 11px; letter-spacing: 1px; color: var(--gold); border: 1px solid var(--border); padding: 6px 12px; border-radius: 20px; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 30px; }
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+    .card p { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+    .card strong { font-size: 28px; font-family: 'Space Grotesk', sans-serif; display: block; }
+    .card span { font-size: 11px; color: var(--muted); }
+
+    .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 26px; margin-bottom: 30px; }
+    .panel h2 { font-size: 20px; margin-bottom: 6px; }
+    .panel p.desc { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; margin-bottom: 20px; }
+    label { font-size: 12px; color: var(--muted); display: flex; flex-direction: column; gap: 6px; }
+    input, select { background: #171f1c; border: 1px solid var(--border); color: #fff; padding: 10px 12px; border-radius: 8px; font-size: 14px; outline: none; }
+    input:focus, select:focus { border-color: var(--gold); }
+    .checkboxes { display: flex; gap: 20px; align-items: center; margin-top: 24px; }
+    .checkboxes label { flex-direction: row; align-items: center; gap: 8px; cursor: pointer; color: var(--text); }
+
+    button { background: #202824; border: 1px solid var(--gold); color: var(--gold); padding: 12px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+    button:hover { background: var(--gold); color: #000; }
+
+    .result-box { margin-top: 24px; padding: 18px; border-radius: 10px; display: none; }
+    .result-box.danger { background: rgba(250, 102, 112, 0.1); border: 1px solid var(--red); }
+    .result-box.warning { background: rgba(213, 182, 106, 0.1); border: 1px solid var(--gold); }
+    .result-box.success { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--green); }
+    .result-box h3 { font-size: 16px; margin-bottom: 8px; }
+    .result-box ul { margin-left: 20px; font-size: 13px; color: var(--muted); line-height: 1.6; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <div class="icon">🛡️</div>
+      <div>
+        <h1>FRAUD<span>GUARD</span></h1>
+        <p style="font-size: 11px; color: var(--muted); letter-spacing: 1.2px;">TRANSACTION RISK & ANOMALY ENGINE</p>
+      </div>
+    </div>
+    <div class="badge">ACTIVE TELEMETRY</div>
+  </header>
+
+  <div class="grid">
+    <div class="card">
+      <p>Processed Transactions</p>
+      <strong>10,000</strong>
+      <span>Portfolio baseline</span>
+    </div>
+    <div class="card">
+      <p>Gross Fraud Volume</p>
+      <strong style="color: var(--red);">$612,450.00</strong>
+      <span>Total loss exposure</span>
+    </div>
+    <div class="card">
+      <p>Detection Rate (Recall)</p>
+      <strong style="color: var(--green);">86.4%</strong>
+      <span>High-risk transactions caught</span>
+    </div>
+    <div class="card">
+      <p>False Positive Rate</p>
+      <strong style="color: var(--gold);">1.8%</strong>
+      <span>Legitimate customer friction</span>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>⚡ Real-Time Transaction Risk Evaluator</h2>
+    <p class="desc">Enter transaction telemetry below to calculate behavioral anomaly scores in real-time.</p>
+
+    <form id="fraudForm">
+      <div class="form-grid">
+        <label>
+          Transaction Amount ($)
+          <input type="number" id="amount" value="450.00" step="10">
+        </label>
+        <label>
+          Customer Baseline Average ($)
+          <input type="number" id="avgAmount" value="85.00" step="10">
+        </label>
+        <label>
+          Distance From Home (Miles)
+          <input type="number" id="distance" value="35.0" step="5">
+        </label>
+        <label>
+          Transactions in Last 24h
+          <input type="number" id="tx24h" value="4" min="0" max="25">
+        </label>
+        <label>
+          Failed Password Attempts
+          <input type="number" id="failedAttempts" value="0" min="0" max="10">
+        </label>
+        <label>
+          Merchant Category
+          <select id="category">
+            <option value="online_shopping">Online Shopping</option>
+            <option value="grocery">Grocery</option>
+            <option value="travel">Travel & Airlines</option>
+            <option value="restaurant">Restaurant</option>
+            <option value="fuel">Fuel / Petrol</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="checkboxes">
+        <label><input type="checkbox" id="deviceChanged"> Unrecognized Device Fingerprint</label>
+        <label><input type="checkbox" id="international"> Cross-Border / International</label>
+      </div>
+
+      <div style="margin-top: 24px;">
+        <button type="button" onclick="evaluateRisk()">Evaluate Transaction Risk</button>
+      </div>
+    </form>
+
+    <div id="resultBox" class="result-box">
+      <h3 id="resultHeading"></h3>
+      <p id="resultScore" style="font-size: 13px; margin-bottom: 8px;"></p>
+      <ul id="reasonsList"></ul>
+    </div>
+  </div>
+
+  <script>
+    function evaluateRisk() {
+      const amount = parseFloat(document.getElementById('amount').value) || 0;
+      const avg = parseFloat(document.getElementById('avgAmount').value) || 1;
+      const distance = parseFloat(document.getElementById('distance').value) || 0;
+      const tx24h = parseInt(document.getElementById('tx24h').value) || 0;
+      const failed = parseInt(document.getElementById('failedAttempts').value) || 0;
+      const device = document.getElementById('deviceChanged').checked;
+      const intl = document.getElementById('international').checked;
+
+      let score = 0;
+      let reasons = [];
+      const ratio = amount / avg;
+
+      // 1. Spend Surge
+      if (ratio >= 4.0) { score += 35; reasons.push(`Critical spend surge: Transaction is ${ratio.toFixed(1)}x customer's baseline average.`); }
+      else if (ratio >= 2.5) { score += 20; reasons.push(`Moderate spend surge: Transaction is ${ratio.toFixed(1)}x customer's baseline.`); }
+
+      // 2. Authentication Failures
+      if (failed >= 3) { score += 30; reasons.push(`High authentication risk: ${failed} failed login attempts prior to authorization.`); }
+      else if (failed >= 1) { score += 15; reasons.push(`Security flag: ${failed} failed authentication attempt.`); }
+
+      // 3. Hardware Fingerprint
+      if (device) { score += 20; reasons.push("Hardware mismatch: Unrecognized device signature detected."); }
+
+      // 4. Geovelocity
+      if (intl) { score += 15; reasons.push("Geopolitical risk: Cross-border foreign exchange transaction."); }
+      if (distance > 50) { score += 15; reasons.push(`Geovelocity anomaly: Located ${distance.toFixed(1)} miles from primary billing origin.`); }
+
+      // 5. Velocity Surge
+      if (tx24h >= 8) { score += 20; reasons.push(`High velocity burst: ${tx24h} card swipes submitted in the last 24 hours.`); }
+
+      const finalScore = Math.min(score, 100);
+      const box = document.getElementById('resultBox');
+      const heading = document.getElementById('resultHeading');
+      const scoreText = document.getElementById('resultScore');
+      const list = document.getElementById('reasonsList');
+
+      box.style.display = 'block';
+      box.className = 'result-box';
+      list.innerHTML = '';
+
+      if (finalScore >= 65) {
+        box.classList.add('danger');
+        heading.innerText = '🚨 HIGH RISK TRANSACTION — DECISION: AUTO-DECLINE (BLOCKED)';
+        heading.style.color = 'var(--red)';
+      } else if (finalScore >= 40) {
+        box.classList.add('warning');
+        heading.innerText = '⚠️ SUSPICIOUS TRANSACTION — DECISION: STEP-UP 3D-SECURE / OTP REQUIRED';
+        heading.style.color = 'var(--gold)';
+      } else {
+        box.classList.add('success');
+        heading.innerText = '✅ CLEAN TRANSACTION — DECISION: AUTO-APPROVED';
+        heading.style.color = 'var(--green)';
+      }
+
+      scoreText.innerText = `Calculated Risk Score: ${finalScore} / 100`;
+
+      if (reasons.length > 0) {
+        reasons.forEach(r => {
+          const li = document.createElement('li');
+          li.innerText = r;
+          list.appendChild(li);
+        });
+      } else {
+        const li = document.createElement('li');
+        li.innerText = 'All parameters within normal customer baseline tolerance.';
+        list.appendChild(li);
+      }
+    }
+  </script>
+</body>
+</html>
