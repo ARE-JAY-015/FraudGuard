@@ -30,5 +30,3 @@ The pipeline scores each record from 0 to 100 based on five behavioral risk mult
 - **Capital Protected:** Measured in direct gross dollar volume saved vs. total exposure
 
 ## Running the Engine
-```bash
-python train_model.py
