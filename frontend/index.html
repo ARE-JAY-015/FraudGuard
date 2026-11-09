@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FraudGuard | Transaction Intelligence</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🛡️
+            </div>
+
+            <div>
+                <h1>FraudGuard</h1>
+                <span>Transaction Intelligence</span>
+            </div>
+
+        </div>
+
+
+        <nav class="side-nav">
+
+            <a class="nav-item active" href="#analyze">
+                <span>⌕</span>
+                Analyze Transaction
+            </a>
+
+            <a class="nav-item" href="#results">
+                <span>◈</span>
+                Latest Result
+            </a>
+
+            <a class="nav-item" href="#history">
+                <span>▤</span>
+                Customer History
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-status">
+
+            <span class="status-dot"></span>
+
+            <div>
+                <strong>API Connected</strong>
+                <small>127.0.0.1:8000</small>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main-content">
+
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+            <div>
+
+                <p class="eyebrow">
+                    AI-POWERED FRAUD DETECTION
+                </p>
+
+                <h2>
+                    Transaction Analysis
+                </h2>
+
+                <p class="subtitle">
+                    Evaluate a new transaction using the FraudGuard V3
+                    machine-learning model.
+                </p>
+
+            </div>
+
+
+            <div class="api-pill">
+
+                <span class="status-dot"></span>
+
+                <span id="apiStatus">
+                    Checking API...
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= STAT CARDS ================= -->
+
+        <section class="stats-row">
+
+            <div class="stat-card">
+
+                <span class="stat-label">
+                    Model
+                </span>
+
+                <strong>
+                    FraudGuard V3
+                </strong>
+
+                <small>
+                    ML prediction engine
+                </small>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span class="stat-label">
+                    Analysis
+                </span>
+
+                <strong>
+                    Real-time
+                </strong>
+
+                <small>
+                    Instant transaction scoring
+                </small>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span class="stat-label">
+                    Decision
+                </span>
+
+                <strong>
+                    Risk + Probability
+                </strong>
+
+                <small>
+                    Behavioral explanation included
+                </small>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= MAIN GRID ================= -->
+
+        <section id="analyze" class="content-grid">
+
+
+            <!-- ================= INPUT PANEL ================= -->
+
+            <div class="panel form-panel">
+
+                <div class="panel-heading">
+
+                    <div>
+
+                        <span class="section-number">
+                            01
+                        </span>
+
+                        <h3>
+                            Transaction Details
+                        </h3>
+
+                        <p>
+                            Enter the information available for the transaction.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <form id="transactionForm">
+
+
+                    <!-- CUSTOMER -->
+
+                    <div class="form-section">
+
+                        <h4>
+                            Customer & Amount
+                        </h4>
+
+
+                        <div class="field-grid">
+
+
+                            <div class="field">
+
+                                <label for="customer_id">
+                                    Customer ID
+                                </label>
+
+                                <input
+                                    id="customer_id"
+                                    name="customer_id"
+                                    type="text"
+                                    value="CUST0983"
+                                    placeholder="e.g. CUST1001"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="field">
+
+                                <label for="amount">
+                                    Transaction Amount (₹)
+                                </label>
+
+                                <input
+                                    id="amount"
+                                    name="amount"
+                                    type="number"
+                                    min="0"
+                                    step="0.01"
+                                    value="8500"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="field">
+
+                                <label for="account_age_days">
+                                    Account Age (days)
+                                </label>
+
+                                <input
+                                    id="account_age_days"
+                                    name="account_age_days"
+                                    type="number"
+                                    min="0"
+                                    value="120"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="field">
+
+                                <label for="distance_from_home">
+                                    Distance From Home (km)
+                                </label>
+
+                                <input
+                                    id="distance_from_home"
+                                    name="distance_from_home"
+                                    type="number"
+                                    min="0"
+                                    step="0.1"
+                                    value="420"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TRANSACTION CONTEXT -->
+
+                    <div class="form-section">
+
+                        <h4>
+                            Transaction Context
+                        </h4>
+
+
+                        <div class="field-grid">
+
+
+                            <div class="field">
+
+                                <label for="merchant_category">
+                                    Merchant Category
+                                </label>
+
+                                <select
+                                    id="merchant_category"
+                                    name="merchant_category"
+                                    required
+                                >
+
+                                    <option value="grocery">
+                                        Grocery
+                                    </option>
+
+                                    <option value="electronics" selected>
+                                        Electronics
+                                    </option>
+
+                                    <option value="clothing">
+                                        Clothing
+                                    </option>
+
+                                    <option value="travel">
+                                        Travel
+                                    </option>
+
+                                    <option value="food">
+                                        Food
+                                    </option>
+
+                                    <option value="entertainment">
+                                        Entertainment
+                                    </option>
+
+                                    <option value="healthcare">
+                                        Healthcare
+                                    </option>
+
+                                    <option value="online">
+                                        Online
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="field">
+
+                                <label for="payment_method">
+                                    Payment Method
+                                </label>
+
+                                <select
+                                    id="payment_method"
+                                    name="payment_method"
+                                    required
+                                >
+
+                                    <option value="credit_card" selected>
+                                        Credit Card
+                                    </option>
+
+                                    <option value="debit_card">
+                                        Debit Card
+                                    </option>
+
+                                    <option value="card">
+                                        Card
+                                    </option>
+
+                                    <option value="upi">
+                                        UPI
+                                    </option>
+
+                                    <option value="net_banking">
+                                        Net Banking
+                                    </option>
+
+                                    <option value="wallet">
+                                        Wallet
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="field">
+
+                                <label for="failed_attempts">
+                                    Failed Attempts
+                                </label>
+
+                                <input
+                                    id="failed_attempts"
+                                    name="failed_attempts"
+                                    type="number"
+                                    min="0"
+                                    value="3"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- CHECKBOXES -->
+
+                        <div class="toggle-row">
+
+
+                            <label class="toggle-card">
+
+                                <input
+                                    id="device_changed"
+                                    type="checkbox"
+                                >
+
+                                <span class="toggle-ui"></span>
+
+                                <span>
+
+                                    <strong>
+                                        Changed Device
+                                    </strong>
+
+                                    <small>
+                                        Transaction is from a new device
+                                    </small>
+
+                                </span>
+
+                            </label>
+
+
+                            <label class="toggle-card">
+
+                                <input
+                                    id="international"
+                                    type="checkbox"
+                                >
+
+                                <span class="toggle-ui"></span>
+
+                                <span>
+
+                                    <strong>
+                                        International
+                                    </strong>
+
+                                    <small>
+                                        Transaction is international
+                                    </small>
+
+                                </span>
+
+                            </label>
+
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DEMO -->
+
+                    <div class="example-box">
+
+                        <div>
+
+                            <strong>
+                                Demo high-risk transaction
+                            </strong>
+
+                            <span>
+                                Loads a sample transaction for a quick test.
+                            </span>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="text-button"
+                            id="loadDemo"
+                        >
+                            Use example
+                        </button>
+
+                    </div>
+
+
+                    <!-- BUTTONS -->
+
+                    <div class="form-actions">
+
+                        <button
+                            type="button"
+                            class="secondary-btn"
+                            id="resetBtn"
+                        >
+                            Reset
+                        </button>
+
+
+                        <button
+                            type="submit"
+                            class="primary-btn"
+                            id="analyzeBtn"
+                        >
+
+                            <span>
+                                Analyze Transaction
+                            </span>
+
+                            <span class="arrow">
+                                →
+                            </span>
+
+                        </button>
+
+                    </div>
+
+
+                    <p
+                        class="form-message"
+                        id="formMessage"
+                    ></p>
+
+                </form>
+
+            </div>
+
+
+
+            <!-- ================= RESULT PANEL ================= -->
+
+            <div
+                class="panel result-panel"
+                id="results"
+            >
+
+                <div class="panel-heading result-heading">
+
+                    <div>
+
+                        <span class="section-number">
+                            02
+                        </span>
+
+                        <h3>
+                            Fraud Assessment
+                        </h3>
+
+                        <p>
+                            Model prediction and behavioral intelligence.
+                        </p>
+
+                    </div>
+
+
+                    <span
+                        class="result-badge neutral"
+                        id="resultBadge"
+                    >
+                        WAITING
+                    </span>
+
+                </div>
+
+
+                <!-- EMPTY RESULT -->
+
+                <div
+                    class="empty-result"
+                    id="emptyResult"
+                >
+
+                    <div class="empty-icon">
+                        ⌁
+                    </div>
+
+                    <h4>
+                        No transaction analyzed yet
+                    </h4>
+
+                    <p>
+                        Submit a transaction to see fraud probability,
+                        risk level and behavioral reasons.
+                    </p>
+
+                </div>
+
+
+                <!-- RESULT -->
+
+                <div
+                    class="result-content hidden"
+                    id="resultContent"
+                >
+
+
+                    <div
+                        class="risk-card"
+                        id="riskCard"
+                    >
+
+                        <div>
+
+                            <span class="mini-label">
+                                Prediction
+                            </span>
+
+                            <strong id="predictionText">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="probability-wrap">
+
+                            <span class="mini-label">
+                                Fraud Probability
+                            </span>
+
+                            <strong>
+                                <span id="probability">
+                                    0
+                                </span>%
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PROBABILITY BAR -->
+
+                    <div class="meter">
+
+                        <div
+                            class="meter-fill"
+                            id="meterFill"
+                        ></div>
+
+                    </div>
+
+
+                    <!-- METRICS -->
+
+                    <div class="result-grid">
+
+
+                        <div class="metric">
+
+                            <span>
+                                Risk Level
+                            </span>
+
+                            <strong id="riskLevel">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="metric">
+
+                            <span>
+                                Amount
+                            </span>
+
+                            <strong id="resultAmount">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="metric">
+
+                            <span>
+                                History Ratio
+                            </span>
+
+                            <strong id="historyRatio">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="metric">
+
+                            <span>
+                                Failed Attempts
+                            </span>
+
+                            <strong id="resultFailed">
+                                —
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BEHAVIOR -->
+
+                    <div class="reasons-box">
+
+                        <div class="box-title">
+
+                            <span>
+                                Behavioral Explanation
+                            </span>
+
+                            <span>
+                                AI
+                            </span>
+
+                        </div>
+
+
+                        <ul id="reasonsList"></ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================= HISTORY ================= -->
+
+        <section
+            id="history"
+            class="panel history-panel"
+        >
+
+            <div class="panel-heading">
+
+                <div>
+
+                    <span class="section-number">
+                        03
+                    </span>
+
+                    <h3>
+                        Customer Transaction History
+                    </h3>
+
+                    <p>
+                        Recent transactions returned by FraudGuard.
+                    </p>
+
+                </div>
+
+
+                <span
+                    class="history-count"
+                    id="historyCount"
+                >
+                    0 transactions
+                </span>
+
+            </div>
+
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Transaction ID
+                            </th>
+
+                            <th>
+                                Date & Time
+                            </th>
+
+                            <th>
+                                Amount
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="historyBody">
+
+                        <tr>
+
+                            <td
+                                colspan="4"
+                                class="table-empty"
+                            >
+                                History will appear after an analysis.
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <footer>
+
+            <span>
+                FraudGuard V3
+            </span>
+
+            <span>
+                •
+            </span>
+
+            <span>
+                AI-powered transaction risk analysis
+            </span>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
